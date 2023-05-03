@@ -3,18 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="assert/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="assert/bootstrap/css/bootstrap.min.css">
     <style>
-        section>div>nav{
+        @media all and (min-width: 500px) {
+            #manage-items-section > div > div:nth-child(2) {
+                display: grid;
+                grid-template-columns: repeat(1, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+            }
+        }
+        #top-bar > div > nav {
             display: inline-block;
         }
-        section>div>nav>ul>li{
+
+        #top-bar > div > nav > ul > li {
             display: inline-block;
             list-style-type: none;
         }
+
+        @media all and (min-width: 1000px){
+            #manage-items-section > div > div:nth-child(2) {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(1, 1fr);
+            }
+        }
+
+
+        #manage-items-section > div > div:nth-child(2) >div:nth-child(2){
+            height: 300px;
+        }
+        #manage-items-section > div > div:nth-child(2) >div:nth-child(2){
+            overflow: scroll;
+        }
+
+        #manage-items-section > div > div:nth-child(2) > div:first-child > div:nth-child(2) {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
     </style>
+
 </head>
 <body>
-<section>
+<section id="top-bar">
     <div>
         <nav>
             <ul>
@@ -26,15 +61,121 @@
     </div>
 
 </section>
-<section>
+<section id="manage-items-section">
     <div>
         <div>
-
+            <h1>Manage Items</h1>
         </div>
         <div>
+            <div>
+                <div class="input-group-sm mb-4 item-id">
+                    <input id="txtItemId" type="text" class="form-control " placeholder="Item Id"
+                           aria-label="Item ID"><br>
+                    <input id="txtItemName" type="text" class="form-control " placeholder="Item Name"
+                           aria-label="Item ID"><br>
+                    <input id="txtItemPrice" type="text" class="form-control " placeholder="Item Price"
+                           aria-label="Item ID"><br>
+                    <input id="txtItemQty" type="text" class="form-control " placeholder="Item QTY"
+                           aria-label="Item ID"><br>
+                </div>
+                <div>
+                    <div>
+                        <button type="button" class="btn btn-warning">Search</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                        <button id="btnSave" type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-success">Success</button>
+                    </div>
 
+                </div>
+            </div>
+            <div>
+                <table class="table">
+                    <thead class="table-light">
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    </thead>
+                    <tbody id="tblItemData">
+                    <tr>
+                        <td>I-001</td>
+                        <td>Samba 10kg</td>
+                        <td>Rs.2200.00</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>I-002</td>
+                        <td>Suger 1kg</td>
+                        <td>Rs.200.00</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>I-003</td>
+                        <td>Coca-cola 1l</td>
+                        <td>Rs.340.00</td>
+                        <td>50</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
 </body>
+<script src="assert/jquery/jquery-3.6.4.min.js"></script>
+<script>
+    console.log("Hello");
+    document.getElementById("btnSave").addEventListener('click',function () {
+        //console.log("Clicked"+$);
+        if(!isValidDetails()){
+            alert("Fill All The Texts with valid details and try Again")
+            return;
+        }
+        var row = "<tr>" +"<td>"+"{{id}}"+"</td>"+"<td>"+"{{name}}"+"</td>"+"<td>"+"{{price}}"+"</td>" +"<td>"+"{{qty}}"+"</td>"+ "</tr>";
+        $('#tblItemData').append(row.compose({
+            'id': $('#txtItemId').val(),
+            'name': $('#txtItemName').val(),
+            'price': $('#txtItemPrice').val(),
+            'qty': $('#txtItemQty').val()
+        }));
+
+        clearFields();
+    });
+    /*document.getElementById("btnSave").addEventListener('click',function () {
+        /!*if(!validate()){
+            alert("Check All Fields And Try Again")
+            return;
+        }
+        let id = document.getElementById("txtId").value;
+        let name = document.getElementById("txtName").value;
+        let address = document.getElementById("txtAddress").value;
+        let contact = document.getElementById("txtContact").value;
+
+        document.getElementById("tableData").innerHTML+="<tr>"+"<td>"+id+"</td>"+"<td>"
+            +name+"</td>"+"<td>"+address+"</td>"+"<td>"+contact+"</td>"+"</tr>"*!/;
+            alert("Working");
+    });*/
+    function clearFields(){
+        $("#txtItemId").text('');
+        $("#txtItemName").text('');
+        $("#txtItemPrice").text('');
+        $("#txtItemQty").text('');
+    }
+
+    function isValidDetails(){
+        if($("#txtItemId").val()==='')return false;
+        if($("#txtItemName").val()==='')return false;
+        if($("#txtItemPrice").val()==='')return false;
+        if($("#txtItemQty").val()==='')return false;
+        return true;
+    }
+    String.prototype.compose = (function (){
+        var re = /\{{(.+?)\}}/g;
+        return function (o){
+            return this.replace(re, function (_, k){
+                return typeof o[k] != 'undefined' ? o[k] : '';
+            });
+        }
+    }());
+</script>
 </html>
