@@ -3,44 +3,415 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="assert/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="assert/bootstrap/css/bootstrap.min.css">
     <style>
-        @media all and (min-width: 500px){
-            section>div{
+        #manage-items-section, #place-order-section {
+            display: none;
+        }
+
+        #top-bar > div > nav {
+            display: inline-block;
+        }
+
+        #top-bar > div > nav > ul > li {
+            display: inline-block;
+            list-style-type: none;
+        }
+
+        @media (min-width: 500px) {
+            #manage-items-section > div > div:nth-child(2), #manage-customers-section > div > div:nth-child(2) {
                 display: grid;
-                grid-template-columns: repeat(2,1fr);
-                grid-template-rows: repeat(3,1fr);
+                margin: 20px;
+                grid-template-columns: repeat(1, 1fr);
+                grid-template-rows: repeat(2, 1fr);
             }
         }
-        @media all and (min-width: 1000px){
-            section>div{
+
+        @media (min-width: 1000px) {
+            #manage-items-section > div > div:nth-child(2), #manage-customers-section > div > div:nth-child(2) {
                 display: grid;
-                grid-template-columns: repeat(3,1fr);
-                grid-template-rows: repeat(2,1fr);
+                margin: 40px;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(1, 1fr);
             }
         }
-        section>div>div{
-            width: 300px;
+
+
+        #manage-items-section > div > div:nth-child(2) > div:nth-child(2), #manage-customers-section > div > div:nth-child(2) > div:nth-child(2) {
             height: 300px;
-            background-color: crimson;
-            border: 2px solid white;
         }
-        section>div>div:first-child{
-            grid-column: 1/3;
-            width: 650px;
+
+        #manage-items-section > div > div:nth-child(2) > div:nth-child(2), #manage-customers-section > div > div:nth-child(2) > div:nth-child(2) {
+            overflow: scroll;
         }
+
+        #manage-items-section > div > div:nth-child(2) > div:first-child > div:nth-child(2), #manage-customers-section > div > div:nth-child(2) > div:first-child > div:nth-child(2) {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
+        #place-order-section > div > div:first-child {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 1fr;
+        }
+
+        #top-bar {
+            position: relative;
+            height: 60px;
+        }
+
+        #top-bar > div {
+            position: absolute;
+            width: 100%;
+            height: 60px;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+        }
+        #top-bar>div>nav{
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        #top-bar>div>nav{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #top-bar>div>nav>ul>li{
+            padding-left: 60px;
+            padding-right: 60px;
+            border-bottom: 5px solid #797676;
+            color: #797676;
+        }
+        #top-bar>div>nav>ul>li:hover{
+            border-bottom: 5px solid #4e7cff;
+            color: #4e7cff;
+        }
+
     </style>
+
 </head>
 <body>
-<section>
+<section id="top-bar">
     <div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <nav>
+            <ul>
+                <li><a id="btnManageCustomer" type="button">Customers</a></li>
+                <li><a id="btnManageItems" type="button">Items</a></li>
+                <li><a id="btnManageOrder" type="button">Place-Order</a></li>
+            </ul>
+        </nav>
+    </div>
+
+</section>
+<section id="manage-items-section">
+    <div>
+        <div>
+            <h1>Manage Items</h1>
+        </div>
+        <div>
+            <div>
+                <div class="input-group-sm mb-4 item-id">
+                    <input id="txtItemId" type="text" class="form-control " placeholder="Item Id"
+                           aria-label="Item ID"><br>
+                    <input id="txtItemName" type="text" class="form-control " placeholder="Item Name"
+                           aria-label="Item ID"><br>
+                    <input id="txtItemPrice" type="text" class="form-control " placeholder="Item Price"
+                           aria-label="Item ID"><br>
+                    <input id="txtItemQty" type="text" class="form-control " placeholder="Item QTY"
+                           aria-label="Item ID"><br>
+                </div>
+                <div>
+                    <div>
+                        <button type="button" class="btn btn-warning">Search</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                        <button id="btnSave" type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-success">Success</button>
+                    </div>
+
+                </div>
+            </div>
+            <div>
+                <table class="table">
+                    <thead class="table-light">
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    </thead>
+                    <tbody id="tblItemData">
+                    <tr>
+                        <td>I-001</td>
+                        <td>Samba 10kg</td>
+                        <td>Rs.2200.00</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>I-002</td>
+                        <td>Suger 1kg</td>
+                        <td>Rs.200.00</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>I-003</td>
+                        <td>Coca-cola 1l</td>
+                        <td>Rs.340.00</td>
+                        <td>50</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </section>
+<section id="manage-customers-section">
+    <div>
+        <div>
+            <h1>Manage Customers</h1>
+        </div>
+        <div>
+            <div>
+                <div class="input-group-sm mb-4 item-id">
+                    <input id="txtCustomerId" type="text" class="form-control " placeholder="Customer Id"
+                           aria-label="Item ID"><br>
+                    <input id="txtCustomerName" type="text" class="form-control " placeholder="Customer Name"
+                           aria-label="Item ID"><br>
+                    <input id="txtCustomerAddress" type="text" class="form-control " placeholder="Customer Address"
+                           aria-label="Item ID"><br>
+                    <input id="txtCustomerContact" type="text" class="form-control " placeholder="Customer Contact"
+                           aria-label="Item ID"><br>
+                </div>
+                <div>
+                    <div>
+                        <button type="button" class="btn btn-warning">Search</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                        <button id="btnSaveCustomer" type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-success">Success</button>
+                    </div>
 
+                </div>
+            </div>
+            <div>
+                <table class="table">
+                    <thead class="table-light">
+                    <th>Customer Id</th>
+                    <th>Customer Name</th>
+                    <th>Customer Address</th>
+                    <th>Customer Contact</th>
+                    </thead>
+                    <tbody id="tblCustomerData">
+                    <tr>
+                        <td>C-001</td>
+                        <td>Pasindu Sampath</td>
+                        <td>Habarana</td>
+                        <td>078719579</td>
+                    </tr>
+                    <tr>
+                        <td>C-002</td>
+                        <td>Pasindu Sampath</td>
+                        <td>Habarana</td>
+                        <td>078719579</td>
+                    </tr>
+                    <tr>
+                        <td>C-003</td>
+                        <td>Pasindu Sampath</td>
+                        <td>Habarana</td>
+                        <td>078719579</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="place-order-section">
+    <div>
+        <div>
+            <div>
+                <div>
+                    <div class="input-group-sm mb-4 item-id">
+                        <div class="dropdown-center">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                SELECT CUSTOMER
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#top-bar">Customer 1</a></li>
+                                <li><a class="dropdown-item" href="#manage-customers-section">Customer 2</a></li>
+                                <li><a class="dropdown-item" href="#manage-items-section">Customer 3</a></li>
+                            </ul>
+                        </div>
+                        <input id="txtCustomerId1" type="text" class="form-control " placeholder="Customer Id"
+                               aria-label="Item ID"><br>
+                        <input id="txtCustomerName1" type="text" class="form-control " placeholder="Customer Name"
+                               aria-label="Item ID"><br>
+                        <input id="txtCustomerAddress1" type="text" class="form-control " placeholder="Customer Address"
+                               aria-label="Item ID"><br>
+                        <input id="txtCustomerContact1" type="text" class="form-control " placeholder="Customer Contact"
+                               aria-label="Item ID"><br>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div class="input-group-sm mb-4 item-id">
+                        <div class="dropdown-center">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                SELECT ITEM
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#top-bar">Customer 1</a></li>
+                                <li><a class="dropdown-item" href="#manage-customers-section">Customer 2</a></li>
+                                <li><a class="dropdown-item" href="#manage-items-section">Customer 3</a></li>
+                            </ul>
+                        </div>
+                        <input id="txtItemName1" type="text" class="form-control " placeholder="Item Name"
+                               aria-label="Item ID"><br>
+                        <input id="txtItemPrice1" type="text" class="form-control " placeholder="Item Price"
+                               aria-label="Item ID"><br>
+                        <input id="txtItemQty1" type="text" class="form-control " placeholder="QTY On Hand"
+                               aria-label="Item ID"><br>
+                        <input id="txtQty" type="text" class="form-control " placeholder="Item QTY"
+                               aria-label="Item ID">
+                        <button id="btnAddToCart" type="button" class="btn btn-primary">Add To Cart</button>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="cash" class="form-label">Cash</label>
+                            <input id="cash" type="number" class="form-control" placeholder="Cash">
+                        </div>
+                        <div class="col">
+                            <label for="discount" class="form-label">Discount</label>
+                            <input id="discount" type="number" class="form-control" placeholder="Discount">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="balance" class="form-label">Balance</label>
+                            <input id="balance" type="number" class="form-control" placeholder="Balance">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <table id="table" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>I-001</td>
+                    <td>Suger</td>
+                    <td>Rs.250.00</td>
+                    <td>500g</td>
+                    <td>Rs.125.00</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
 </body>
+<script src="assert/jquery/jquery-3.6.4.min.js"></script>
+<script>
+    console.log("Hello");
+    document.getElementById("btnSave").addEventListener('click', function () {
+        //console.log("Clicked"+$);
+        if (!isValidDetails()) {
+            alert("Fill All The Texts with valid details and try Again")
+            return;
+        }
+        var row = "<tr>" + "<td>" + "{{id}}" + "</td>" + "<td>" + "{{name}}" + "</td>" + "<td>" + "{{price}}" + "</td>" + "<td>" + "{{qty}}" + "</td>" + "</tr>";
+        $('#tblItemData').append(row.compose({
+            'id': $('#txtItemId').val(),
+            'name': $('#txtItemName').val(),
+            'price': $('#txtItemPrice').val(),
+            'qty': $('#txtItemQty').val()
+        }));
+
+        clearFields();
+    });
+
+
+    function clearFields() {
+        $("#txtItemId").text('');
+        $("#txtItemName").text('');
+        $("#txtItemPrice").text('');
+        $("#txtItemQty").text('');
+    }
+
+
+    $("#btnManageCustomer").click(function () {
+        $('#manage-customers-section').css("display", "block");
+        $('#manage-items-section').css("display", "none");
+        $('#place-order-section').css("display", "none");
+        changeColor("#btnManageCustomer","#4e7cff");
+        changeColor("#btnManageItems","#797676");
+        changeColor("#btnManageOrder","#797676");
+
+    });
+
+    function changeColor(button,color){
+        $(button).css("border-bottom",color);
+        $(button).css("color",color);
+       /* $('#btnManageItems').css("border-bottom","5px solid #797676");
+        $('#btnManageItems').css("color","#797676");
+        $('#btnManageOrder').css("border-bottom","5px solid #797676");
+        $('#btnManageOrder').css("color","#797676");*/
+    }
+
+    $('#btnManageItems').click(function () {
+        $('#manage-items-section').css("display", "block");
+        $('#manage-customers-section').css("display", "none");
+        $('#place-order-section').css("display", "none");
+        changeColor("#btnManageCustomer","#797676");
+        changeColor("#btnManageItems","#4e7cff");
+        changeColor("#btnManageOrder","#797676");
+    });
+
+    $('#btnManageOrder').click(function () {
+        $('#manage-items-section').css("display", "none");
+        $('#manage-customers-section').css("display", "none");
+        $('#place-order-section').css("display", "block");
+        changeColor("#btnManageCustomer","#797676");
+        changeColor("#btnManageItems","#797676");
+        changeColor("#btnManageOrder","#4e7cff");
+    });
+
+    function isValidDetails() {
+        if ($("#txtItemId").val() === '') return false;
+        if ($("#txtItemName").val() === '') return false;
+        if ($("#txtItemPrice").val() === '') return false;
+        if ($("#txtItemQty").val() === '') return false;
+        return true;
+    }
+
+    String.prototype.compose = (function () {
+        var re = /\{{(.+?)\}}/g;
+        return function (o) {
+            return this.replace(re, function (_, k) {
+                return typeof o[k] != 'undefined' ? o[k] : '';
+            });
+        }
+    }());
+</script>
 </html>
