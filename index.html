@@ -85,11 +85,15 @@
         #top-bar>div>nav>ul>li{
             padding-left: 60px;
             padding-right: 60px;
-            border-bottom: 5px solid #797676;
             color: #797676;
         }
-        #top-bar>div>nav>ul>li:hover{
+        #top-bar>div>nav>ul>li>a{
+            border-bottom: 5px solid #797676;
+        }
+        #top-bar>div>nav>ul>li>a:hover{
             border-bottom: 5px solid #4e7cff;
+        }
+        #top-bar>div>nav>ul>li:hover{
             color: #4e7cff;
         }
 
@@ -334,7 +338,26 @@
 <script src="assert/jquery/jquery-3.6.4.min.js"></script>
 <script>
     console.log("Hello");
-    document.getElementById("btnSave").addEventListener('click', function () {
+    $("#btnSave").click(function () {
+        if (!isValidDetails()) {
+            alert("Fill All The Texts with valid details and try Again")
+            return;
+        }
+        let row =`<tr><td>${$('#txtItemId').val()}</td><td>${$('#txtItemName').val()}</td><td>${$('#txtItemPrice').val()
+        }</td><td>${$('#txtItemQty').val()}</td>`;
+
+        $("#tblItemData").append(row);
+
+        $("#tblItemData>tr").click(function (){
+            $("#txtItemId").val($(this).children().eq(0).text());
+            $("#txtItemName").val($(this).children().eq(1).text());
+            $("#txtItemPrice").val($(this).children().eq(2).text());
+            $("#txtItemQty").val($(this).children().eq(3).text());
+        });
+    });
+
+
+    /*document.getElementById("btnSave").addEventListener('click', function () {
         //console.log("Clicked"+$);
         if (!isValidDetails()) {
             alert("Fill All The Texts with valid details and try Again")
@@ -349,7 +372,7 @@
         }));
 
         clearFields();
-    });
+    });*/
 
 
     function clearFields() {
@@ -371,7 +394,7 @@
     });
 
     function changeColor(button,color){
-        $(button).css("border-bottom",color);
+        $(button).css("border-bottom","5px solid "+color);
         $(button).css("color",color);
        /* $('#btnManageItems').css("border-bottom","5px solid #797676");
         $('#btnManageItems').css("color","#797676");
