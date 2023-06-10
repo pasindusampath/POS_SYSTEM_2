@@ -132,10 +132,10 @@
                 </div>
                 <div>
                     <div>
-                        <button type="button" class="btn btn-warning">Search</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                        <button id="btnSave" type="button" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-success">Success</button>
+                        <button id="btnSearchItem" type="button" class="btn btn-warning">Search</button>
+                        <button id="btnDeleteItem" type="button" class="btn btn-danger">Delete</button>
+                        <button id="btnSaveItem" type="button" class="btn btn-primary">Save</button>
+                        <button id="btnUpdateItem" type="button" class="btn btn-success">Update</button>
                     </div>
 
                 </div>
@@ -192,10 +192,10 @@
                 </div>
                 <div>
                     <div>
-                        <button type="button" class="btn btn-warning">Search</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
+                        <button id="btnSearchCustomer"type="button" class="btn btn-warning">Search</button>
+                        <button id="btnDeleteCustomer"type="button" class="btn btn-danger">Delete</button>
                         <button id="btnSaveCustomer" type="button" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-success">Success</button>
+                        <button id="btnUpdateCustomer" type="button" class="btn btn-success">Update</button>
                     </div>
 
                 </div>
@@ -336,9 +336,17 @@
 </section>
 </body>
 <script src="assert/jquery/jquery-3.6.4.min.js"></script>
+<script type="module" src="db/db.js"></script>
+<script type="module" src="model/Item.js"></script>
+<script type="module" src="model/Customer.js"></script>
+<script type="module" src="controller/ItemController.js"></script>
+<script type="module" src="controller/CustomerController.js"></script>
+
+
+
 <script>
     console.log("Hello");
-    $("#btnSave").click(function () {
+    /*$("#btnSaveItem").click(function () {
         if (!isValidDetails()) {
             alert("Fill All The Texts with valid details and try Again")
             return;
@@ -354,7 +362,7 @@
             $("#txtItemPrice").val($(this).children().eq(2).text());
             $("#txtItemQty").val($(this).children().eq(3).text());
         });
-    });
+    });*/
 
 
     /*document.getElementById("btnSave").addEventListener('click', function () {
@@ -375,13 +383,12 @@
     });*/
 
 
-    function clearFields() {
+    /*   function clearFields() {
         $("#txtItemId").text('');
         $("#txtItemName").text('');
         $("#txtItemPrice").text('');
         $("#txtItemQty").text('');
-    }
-
+    }*/
 
     $("#btnManageCustomer").click(function () {
         $('#manage-customers-section').css("display", "block");
@@ -396,10 +403,10 @@
     function changeColor(button,color){
         $(button).css("border-bottom","5px solid "+color);
         $(button).css("color",color);
-       /* $('#btnManageItems').css("border-bottom","5px solid #797676");
+        $('#btnManageItems').css("border-bottom","5px solid #797676");
         $('#btnManageItems').css("color","#797676");
         $('#btnManageOrder').css("border-bottom","5px solid #797676");
-        $('#btnManageOrder').css("color","#797676");*/
+        $('#btnManageOrder').css("color","#797676");
     }
 
     $('#btnManageItems').click(function () {
@@ -420,21 +427,21 @@
         changeColor("#btnManageOrder","#4e7cff");
     });
 
-    function isValidDetails() {
+    /*function isValidDetails() {
         if ($("#txtItemId").val() === '') return false;
         if ($("#txtItemName").val() === '') return false;
         if ($("#txtItemPrice").val() === '') return false;
         if ($("#txtItemQty").val() === '') return false;
         return true;
-    }
+    }*/
 
-    String.prototype.compose = (function () {
+    /*String.prototype.compose = (function () {
         var re = /\{{(.+?)\}}/g;
         return function (o) {
             return this.replace(re, function (_, k) {
                 return typeof o[k] != 'undefined' ? o[k] : '';
             });
         }
-    }());
+    }());*/
 </script>
 </html>
