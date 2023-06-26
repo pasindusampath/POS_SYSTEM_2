@@ -132,10 +132,10 @@
                 </div>
                 <div>
                     <div>
-                        <button type="button" class="btn btn-warning">Search</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                        <button id="btnSave" type="button" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-success">Success</button>
+                        <button id="btnSearchItem" type="button" class="btn btn-warning">Search</button>
+                        <button id="btnDeleteItem" type="button" class="btn btn-danger">Delete</button>
+                        <button id="btnSaveItem" type="button" class="btn btn-primary">Save</button>
+                        <button id="btnUpdateItem" type="button" class="btn btn-success">Update</button>
                     </div>
 
                 </div>
@@ -192,10 +192,10 @@
                 </div>
                 <div>
                     <div>
-                        <button type="button" class="btn btn-warning">Search</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
+                        <button id="btnSearchCustomer"type="button" class="btn btn-warning">Search</button>
+                        <button id="btnDeleteCustomer"type="button" class="btn btn-danger">Delete</button>
                         <button id="btnSaveCustomer" type="button" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-success">Success</button>
+                        <button id="btnUpdateCustomer" type="button" class="btn btn-success">Update</button>
                     </div>
 
                 </div>
@@ -240,11 +240,11 @@
                 <div>
                     <div class="input-group-sm mb-4 item-id">
                         <div class="dropdown-center">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            <button id="btn-customer-data" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                 SELECT CUSTOMER
                             </button>
-                            <ul class="dropdown-menu">
+                            <ul id="customer-data" class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#top-bar">Customer 1</a></li>
                                 <li><a class="dropdown-item" href="#manage-customers-section">Customer 2</a></li>
                                 <li><a class="dropdown-item" href="#manage-items-section">Customer 3</a></li>
@@ -265,11 +265,11 @@
                 <div>
                     <div class="input-group-sm mb-4 item-id">
                         <div class="dropdown-center">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            <button id="btn-item-data" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                 SELECT ITEM
                             </button>
-                            <ul class="dropdown-menu">
+                            <ul id="item-data" class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#top-bar">Customer 1</a></li>
                                 <li><a class="dropdown-item" href="#manage-customers-section">Customer 2</a></li>
                                 <li><a class="dropdown-item" href="#manage-items-section">Customer 3</a></li>
@@ -336,9 +336,25 @@
 </section>
 </body>
 <script src="assert/jquery/jquery-3.6.4.min.js"></script>
+
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"
+></script>
+
+<script type="module" src="db/db.js"></script>
+<script type="module" src="model/Item.js"></script>
+<script type="module" src="model/Customer.js"></script>
+<script type="module" src="controller/ItemController.js"></script>
+<script type="module" src="controller/CustomerController.js"></script>
+<script type="module" src="controller/PlaceOrderController.js"></script>
+
+
+
 <script>
     console.log("Hello");
-    $("#btnSave").click(function () {
+    /*$("#btnSaveItem").click(function () {
         if (!isValidDetails()) {
             alert("Fill All The Texts with valid details and try Again")
             return;
@@ -354,7 +370,7 @@
             $("#txtItemPrice").val($(this).children().eq(2).text());
             $("#txtItemQty").val($(this).children().eq(3).text());
         });
-    });
+    });*/
 
 
     /*document.getElementById("btnSave").addEventListener('click', function () {
@@ -375,13 +391,12 @@
     });*/
 
 
-    function clearFields() {
+    /*   function clearFields() {
         $("#txtItemId").text('');
         $("#txtItemName").text('');
         $("#txtItemPrice").text('');
         $("#txtItemQty").text('');
-    }
-
+    }*/
 
     $("#btnManageCustomer").click(function () {
         $('#manage-customers-section').css("display", "block");
@@ -396,10 +411,10 @@
     function changeColor(button,color){
         $(button).css("border-bottom","5px solid "+color);
         $(button).css("color",color);
-       /* $('#btnManageItems').css("border-bottom","5px solid #797676");
+        $('#btnManageItems').css("border-bottom","5px solid #797676");
         $('#btnManageItems').css("color","#797676");
         $('#btnManageOrder').css("border-bottom","5px solid #797676");
-        $('#btnManageOrder').css("color","#797676");*/
+        $('#btnManageOrder').css("color","#797676");
     }
 
     $('#btnManageItems').click(function () {
@@ -411,30 +426,23 @@
         changeColor("#btnManageOrder","#797676");
     });
 
-    $('#btnManageOrder').click(function () {
-        $('#manage-items-section').css("display", "none");
-        $('#manage-customers-section').css("display", "none");
-        $('#place-order-section').css("display", "block");
-        changeColor("#btnManageCustomer","#797676");
-        changeColor("#btnManageItems","#797676");
-        changeColor("#btnManageOrder","#4e7cff");
-    });
 
-    function isValidDetails() {
+
+    /*function isValidDetails() {
         if ($("#txtItemId").val() === '') return false;
         if ($("#txtItemName").val() === '') return false;
         if ($("#txtItemPrice").val() === '') return false;
         if ($("#txtItemQty").val() === '') return false;
         return true;
-    }
+    }*/
 
-    String.prototype.compose = (function () {
+    /*String.prototype.compose = (function () {
         var re = /\{{(.+?)\}}/g;
         return function (o) {
             return this.replace(re, function (_, k) {
                 return typeof o[k] != 'undefined' ? o[k] : '';
             });
         }
-    }());
+    }());*/
 </script>
 </html>
